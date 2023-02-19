@@ -7,7 +7,7 @@ app.use(express.json());
 
 /* 
  1 : Get -  buscar uma informação dentro do servidor
- 2 : Post -  incluir ua informação no servidor
+ 2 : Post -  incluir uma informação no servidor
  3 : Put - alterar uma informação no servidor
  4 : Patch -  alterar uma informação especifica
  5 : Delete -  alterar uma informação no servidor
