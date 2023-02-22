@@ -24,6 +24,14 @@ function verifyIfExistsAccountCPF(request, response, next) {
     return next();
 }
 
+function getBalance(statement) {
+    statement.reduce((acc, operation) => {
+        if(operation.type === 'credit') {
+            return acc + operation.amount;
+        }
+    })
+}
+
 
 /*
 CPF - string
@@ -53,12 +61,35 @@ app.post("/account", (request, response) => {
 
 });
 
-// quando quiser que seja usando é somente usar dessa forma : app.use(verifyIfExistsAccountCPF); 
+// quando quiser que seja usando é somente usar dessa forma tudo que tiver abaixo entrar na rota : app.use(verifyIfExistsAccountCPF); 
 
 app.get("/statement", verifyIfExistsAccountCPF, (request, response) => {
   const { customer } = request;
     
   return response.json(customer.statement);
 });
+
+app.post("/deposit",verifyIfExistsAccountCPF, (request, response) => {
+    const { description, amount } = request.body;
+
+    const { customer } = request;
+
+    const statementOperation = {
+        description,
+        amount,
+        created_at: new Date(),
+        type: "credit",
+    };
+
+    customer.statement.push(statementOperation);
+
+    return response.status(201).send();
+   
+});
+
+app.post("/withdraw",verifyIfExistsAccountCPF, (request, response) => {
+ const { amount } = request.body;
+ const { customer } = request;
+})
 
 app.listen(3333);
