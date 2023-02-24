@@ -22,4 +22,42 @@ server.get("/customers/:id", (request, Response) => {
     return response.status(status).json(customer);
 });
 
+server.post("/customers", (request, response) => {
+    const { name, site } = request.body;
+    const id = customers[customers.length - 1].id + 1;
+
+    const newCustomer = { id, name, site };
+    customers.push(newCustomer);
+
+    return response.status(201).json(newCustomer);
+    
+});
+
+server.put("/customers/:id", (request, response) => {
+    const id = parseInt(request.params.id);
+    const { name, site } = request.body;
+
+    const index = customers.findIndex(item => item.id === id);
+    const status = index >= 0 ? 200 : 404;
+
+    if(index >= 0) {
+        customers[index] = { id:parseInt(id), name, site };
+    }
+
+    return response.status(status).json(customers[index]);
+});
+
+server.delete("/customers/:id", (request, response) => {
+    const id = parseInt(request.params.id);
+    const index = customers.findIndex(item => item.id === id);
+    const status = index >= 0 ? 200 : 404;
+
+    if(index >= 0) {
+        customers.splice(index, 1);
+    }
+
+    return response.status(status).json();
+
+});
+
 server.listen(3000);
