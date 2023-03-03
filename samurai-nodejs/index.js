@@ -19,6 +19,8 @@ server.get("/customers/:id", (request, Response) => {
     const customer = customers.find(item => item.id === id);
     const status = customer ? 200 : 404;
 
+    console.debug("GET :: /customers/id ", customer);
+
     return response.status(status).json(customer);
 });
 
