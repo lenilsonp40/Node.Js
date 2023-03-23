@@ -9,8 +9,26 @@ app.use(express.json()); // o express não vem configurado pra ler json, tem que
 
 const projects = [];
 
-app.get('/projects', (request, response) => {
-    return response.json(projects);
+function logRoutes(request, response, next) {
+    const { method, url } = request;
+
+    const route = `[${method.toUpperCase()}] ${url}`;
+
+    console.log(route);
+
+    return next();
+}
+
+ // Usando esse metódo aparece em todas as requisições : app.use(logRoutes);
+
+app.get('/projects', logRoutes, (request, response) => {
+    const { title } = request.query;
+
+    const results = title
+        ? projects.filter(project => project.title.includes(title))
+        : projects;
+
+    return response.json(results);
         
 });
 
