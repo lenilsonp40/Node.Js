@@ -9,12 +9,22 @@ app.use(express.json());
 
 const projects = [];
 
-app.get('/projects',(request, response) => {
+function logRoutes(request, response, next) {
+    const { method, url } = request
+    const route = `[${method.toUpperCase()}] ${url}`
+
+    console.log(route);
+    return next();
+}
+
+//caso queira usar em todas as rotas : app.use(logRoutes);
+
+app.get('/projects', logRoutes, (request, response) => {
     return response.json(projects);
     
 });
 
-app.post('/projects',(request, response) => {
+app.post('/projects', logRoutes, (request, response) => {
     const {name, owner} = request.body
     const project = {
         id: uuidv4(),
@@ -33,20 +43,39 @@ app.put('/projects/:id',(request, response) => {
     const {id} = request.params
     const {name, owner} = request.body
     
-    console.log(id), name, owner;
+    const projectIndex = projects.findIndex(p => p.id === id);
 
-    return response.json([
-        'Projeto 4',
-        'Projeto 2',
-        'Projeto 3'
-    ]);
+    if (projectIndex < 0) {
+        return response.status(404).json({ error:'Project not found' });
+    }
+
+    if (!name || !owner) {
+        return response.status(400).json({ error:'Name and owner are required' });
+    }
+
+    const project = {
+        id,
+        name,
+        owner
+    }
+
+    projects[projectIndex] = project
+
+    return response.json(project);
 });
 
 app.delete('/projects/:id',(request, response) => {
-    return response.json([
-        'Projeto 2',
-        'Projeto 3'
-    ]);
+    const { id } = request.params
+
+    const projectIndex = projects.findIndex(p => p.id === id);
+
+    if (projectIndex < 0) {
+        return response.status(404).json({ error:'Project not found' });
+    }
+
+    projects.splice(projectIndex, 1);
+
+    return response.status(204).send();
 });
 
 app.listen(3000, () => {
