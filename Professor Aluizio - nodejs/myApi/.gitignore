@@ -1,0 +1,46 @@
+# saída compilada
+/ dist
+/ node_modules
+
+# Registros
+Histórico
+* .log
+npm-debug.log *
+yarn-debug.log *
+yarn-error.log *
+lerna-debug.log *
+
+# SO
+.DS_Store
+
+# testes
+/ cobertura
+/ .nyc_output
+
+# IDEs e editores
+/ .idéia
+.projeto
+.classpath
+.c9 /
+* .launch
+.configurações /
+* .sublime-espaço de trabalho
+
+# IDE - VSCode
+.vscode / *
+! .vscode / settings.json
+! .vscode / tasks.json
+! .vscode / launch.json
+! .vscode / extensions.json
+
+# Docker
+.docker / *
+! .docker /entrypoint.sh _
+! .docker / postgres / Dockerfile
+
+.env
+tsconfig.tsbuildinfo
+
+uploads / *
+! uploads / .gitkeep
+db.sqlite
