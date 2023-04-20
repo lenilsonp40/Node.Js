@@ -3,9 +3,9 @@ import { Router } from 'express';
 
 const routes = Router();
 
-routes.get('/', (error, request, response, next) => {
-  throw new AppError({ message: 'Acesso negado!' });
-  return response.json({ message: 'Olá Dev!' });
+routes.get('/', (request, response) => {
+  throw new AppError('Aceso negado');
+  return response.json('Olá Dev!');
 });
 
 export { routes };
