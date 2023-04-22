@@ -50,7 +50,7 @@ app.put('/projects/:id',(request, response) => {
     }
 
     if (!name || !owner) {
-        return response.status(400).json({ error:'Name and owner are required' });
+        return response.status(400).json({ error:'Name and owner are required!' });
     }
 
     const project = {
