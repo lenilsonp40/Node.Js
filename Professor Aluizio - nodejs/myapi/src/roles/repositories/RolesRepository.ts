@@ -1,14 +1,14 @@
 import { Role } from '@roles/entities/Role';
 
 type CreateRoleDTO = {
-  name: string
-}
+  name: string;
+};
 
 export class RolesRepository {
-  private roles: Role[]
+  private roles: Role[];
 
   constructor() {
-    this.roles = []
+    this.roles = [];
   }
 
   create({ name }: CreateRoleDTO) {
