@@ -8,5 +8,46 @@
       "name": "Lenilson Soares",
       "email": "lenilsonp40@gmail.com"
     }
+  },
+  "paths": {
+    "/roles": {
+      "post": {
+        "tags": ["Role"],
+        "sumary": "Create a new role",
+        "description": "Create a new role",
+        "requesBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Role created."
+          },
+          "400": {
+            "description": "Role already exists."
+          }
+        }
+      },
+      "get": {
+        "tags":["Role"],
+        "sumary": "List all roles",
+        "description": "Return all roles paginated.",
+        "responses": {
+          "200": {
+            "description": "Sucess."
+          }
+        }
+      }
+    }
   }
 }
